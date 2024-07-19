@@ -28,7 +28,7 @@ This is the backend service for the Dragon Ball Super Card Game Fusion World app
 
 1. Create a .env file in the root directory with the following variables:
    ```
-   PORT=5000
+   PORT=3000
    MONGO_URI=your_mongodb_uri
    JWT_SECRET=your_jwt_secret
    ```
@@ -49,7 +49,7 @@ npm run dev
 
 ## API Documentation
 
-API documentation is available via Swagger. After starting the server, navigate to http://localhost:5000/api-docs to view the documentation.
+API documentation is available via Swagger. After starting the server, navigate to http://localhost:3000/api-docs to view the documentation.
 
 ## Folder Structure
 ```
