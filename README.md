@@ -57,6 +57,7 @@ src/
 |-- controllers/
 |-- domain/
 | |-- models/
+| |-- interfaces/
 | |-- services/
 |-- infrastructure/
 | |-- database/
