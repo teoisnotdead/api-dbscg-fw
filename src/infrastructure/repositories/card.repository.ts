@@ -14,8 +14,21 @@ export const getCardById = async (id: string): Promise<CardInterface | null> => 
   return await Card.findById(id)
 }
 
-export const getAllCards = async (): Promise<CardInterface[]> => {
-  return await Card.find()
+export const getFilteredCards = async (filters: any): Promise<CardInterface[]> => {
+  const query: any = {}
+  
+  if (filters.card_color) query.card_color = filters.card_color
+  if (filters.card_energy_cost) query.card_energy_cost = filters.card_energy_cost
+  if (filters.card_front_power) query.card_front_power = filters.card_front_power
+  if (filters.card_type) query.card_type = filters.card_type
+  if (filters.card_rarity) query.card_rarity = filters.card_rarity
+  if (filters.card_front_name) query.card_front_name = new RegExp(filters.card_front_name, 'i')
+  if (filters.card_front_trait) query.card_front_trait = filters.card_front_trait
+  if (filters.card_series) query.card_series = filters.card_series
+  
+  if (filters.card_front_skills) query['card_front_skills.type'] = { $in: filters.card_front_skills }
+
+  return await Card.find(query)
 }
 
 export const deleteCard = async (id: string): Promise<CardInterface | null> => {

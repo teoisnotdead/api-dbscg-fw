@@ -22,7 +22,8 @@ export interface CardInterface {
   errata_front?: string
   digital_card_code?: string
   variant_of?: number
-  alternative_art?: AlternativeArt[]
+  image_front: string
+  image_back: string
   createdAt?: string
   updatedAt?: string
 }
@@ -30,10 +31,4 @@ export interface CardInterface {
 interface Skill {
   type: string
   description: string
-}
-
-interface AlternativeArt {
-  version: string
-  image_front: string
-  image_back: string
 }

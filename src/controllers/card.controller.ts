@@ -47,12 +47,13 @@ export const getCardByIdController = async (req: Request, res: Response) => {
   }
 }
 
-export const getAllCardsController = async (req: Request, res: Response) => {
+export const getFilteredCardsController = async (req: Request, res: Response) => {
   try {
-    const cards = await CardService.getAllCards()
-    res.status(200).json(cards)
+      const filters = req.query;
+      const cards = await CardService.getFilteredCards(filters);
+      res.status(200).json(cards);
   } catch (error: any) {
-    res.status(500).json({ message: error.message })
+      res.status(500).json({ message: error.message });
   }
 }
 

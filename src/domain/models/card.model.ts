@@ -13,7 +13,7 @@ const alternativeArtSchema = new Schema(
   {
     version: { type: String, required: true },
     image_front: { type: String, required: true },
-    image_back: { type: String, required: true },
+    image_back: { type: String },
   },
   { _id: false }
 )
@@ -43,7 +43,8 @@ const cardSchema = new Schema<CardInterface>(
     errata_front: { type: String },
     digital_card_code: { type: String },
     variant_of: { type: Number },
-    alternative_art: [alternativeArtSchema],
+    image_front: { type: String, required: true },
+    image_back: { type: String },
   },
   { timestamps: true }
 )
