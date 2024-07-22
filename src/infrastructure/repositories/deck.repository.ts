@@ -1,5 +1,7 @@
 import { Deck } from '../../domain/models/deck.model'
 import { DeckInterface } from '../../domain/interfaces/deck.interface'
+import { generateToken, verifyToken } from '../../domain/services/jwt.service'
+import { deckToPlainObject } from '../../utils/deck.util'
 
 export const createDeck = async (deckData: DeckInterface): Promise<DeckInterface> => {
   const deck = new Deck(deckData)
@@ -40,8 +42,8 @@ export const incrementViewCount = async (deckId: string): Promise<DeckInterface 
 }
 
 export const cloneDeck = async (id: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
-  const deck = await Deck.findById(id);
-  if (!deck) return null;
+  const deck = await Deck.findById(id)
+  if (!deck) return null
 
   const clonedDeck = new Deck({
     deck_name: newDeckName,
@@ -56,7 +58,35 @@ export const cloneDeck = async (id: string, newDeckName: string, username: strin
       nametag: deck.user.nametag,
     },
     cards: deck.cards,
-  });
+  })
 
-  return await clonedDeck.save();
-};
+  return await clonedDeck.save()
+}
+
+export const exportDeck = async (deckId: string): Promise<string | null> => {
+  const deck = await Deck.findById(deckId)
+  if (!deck) {
+    return null
+  }
+
+  const payload = deckToPlainObject(deck)
+
+  return generateToken(payload)
+}
+
+export const importDeck = async (token: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
+  const payload = verifyToken(token)
+
+  const importedDeckData: Omit<DeckInterface, 'createdAt' | 'updatedAt'> = {
+    ...payload,
+    deck_name: newDeckName,
+    view_count: 0,
+    user: {
+      username,
+      nametag: payload.user.nametag,
+    },
+  }
+
+  const importedDeck = new Deck(importedDeckData)
+  return await importedDeck.save()
+}

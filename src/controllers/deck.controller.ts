@@ -103,3 +103,31 @@ export const cloneDeckController = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 }
+
+export const exportDeckController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const token = await DeckService.exportDeck(id);
+    if (token) {
+      res.status(200).json({ token });
+    } else {
+      res.status(404).json({ message: 'Deck not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const importDeckController = async (req: Request, res: Response) => {
+  try {
+    const { token, newDeckName, username } = req.body;
+    const deck = await DeckService.importDeck(token, newDeckName, username);
+    if (deck) {
+      res.status(201).json(deck);
+    } else {
+      res.status(400).json({ message: 'Invalid token or deck data' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}

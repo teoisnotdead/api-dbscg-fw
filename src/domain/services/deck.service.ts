@@ -1,5 +1,4 @@
-import { Deck } from '../models/deck.model';
-import { DeckInterface } from '../interfaces/deck.interface';
+import { DeckInterface } from '../interfaces/deck.interface'
 import * as DeckRepository from '../../infrastructure/repositories/deck.repository'
 
 export const createDeck = async (deckData: DeckInterface): Promise<DeckInterface> => {
@@ -27,5 +26,13 @@ export const incrementViewCount = async (deckId: string): Promise<DeckInterface 
 }
 
 export const cloneDeck = async (id: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
-  return await DeckRepository.cloneDeck(id, newDeckName, username);
+  return await DeckRepository.cloneDeck(id, newDeckName, username)
+}
+
+export const exportDeck = async (deckId: string): Promise<string | null> => {
+  return await DeckRepository.exportDeck(deckId)
+}
+
+export const importDeck = async (token: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
+  return await DeckRepository.importDeck(token, newDeckName, username)
 }
