@@ -24,6 +24,7 @@ export interface CardInterface {
   variant_of?: number
   image_front: string
   image_back: string
+  view_count: number
   createdAt?: string
   updatedAt?: string
 }

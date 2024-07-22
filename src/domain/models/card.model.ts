@@ -9,20 +9,11 @@ const skillSchema = new Schema(
   { _id: false }
 )
 
-const alternativeArtSchema = new Schema(
-  {
-    version: { type: String, required: true },
-    image_front: { type: String, required: true },
-    image_back: { type: String },
-  },
-  { _id: false }
-)
-
 const cardSchema = new Schema<CardInterface>(
   {
     card_color: { type: String, required: true },
-    card_number: { type: String, required: true },
-    card_energy_cost: { type: Number, required: true },
+    card_number: { type: String, required: true, unique: true },
+    card_energy_cost: { type: Number },
     card_front_name: { type: String, required: true },
     card_front_power: { type: String, required: true },
     card_front_trait: { type: String, required: true },
@@ -41,10 +32,11 @@ const cardSchema = new Schema<CardInterface>(
     limited_to: { type: Number },
     errata_back: { type: String },
     errata_front: { type: String },
-    digital_card_code: { type: String },
+    digital_card_code: { type: String, required: true},
     variant_of: { type: Number },
     image_front: { type: String, required: true },
     image_back: { type: String },
+    view_count: { type: Number, default: 0 },
   },
   { timestamps: true }
 )
