@@ -38,3 +38,25 @@ export const incrementViewCount = async (deckId: string): Promise<DeckInterface 
     { new: true }
   )
 }
+
+export const cloneDeck = async (id: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
+  const deck = await Deck.findById(id);
+  if (!deck) return null;
+
+  const clonedDeck = new Deck({
+    deck_name: newDeckName,
+    view_count: 0,
+    deck_type: deck.deck_type,
+    deck_subtype: deck.deck_subtype,
+    deck_format: deck.deck_format,
+    deck_game_type: deck.deck_game_type,
+    deck_leader: deck.deck_leader,
+    user: {
+      username: username,
+      nametag: deck.user.nametag,
+    },
+    cards: deck.cards,
+  });
+
+  return await clonedDeck.save();
+};

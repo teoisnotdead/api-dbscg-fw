@@ -87,3 +87,19 @@ export const incrementViewCountController = async (req: Request, res: Response) 
     res.status(500).json({ message: error.message })
   }
 }
+
+export const cloneDeckController = async (req: Request, res: Response) => {
+  try {
+    const { id, newDeckName, username } = req.body;
+    const clonedDeck = await DeckService.cloneDeck(id, newDeckName, username);
+    if (!clonedDeck) {
+      return res.status(404).json({ message: 'Deck not found' });
+    }
+    res.status(201).json({
+      message: 'Deck cloned successfully',
+      deck: clonedDeck,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}

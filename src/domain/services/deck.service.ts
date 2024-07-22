@@ -25,3 +25,7 @@ export const deleteDeck = async (id: string): Promise<DeckInterface | null> => {
 export const incrementViewCount = async (deckId: string): Promise<DeckInterface | null> => {
   return await DeckRepository.incrementViewCount(deckId)
 }
+
+export const cloneDeck = async (id: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
+  return await DeckRepository.cloneDeck(id, newDeckName, username);
+}
