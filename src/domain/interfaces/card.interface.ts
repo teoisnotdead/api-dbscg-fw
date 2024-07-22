@@ -1,4 +1,5 @@
-export interface CardInterface {
+import { Document } from 'mongoose'
+export interface CardInterface extends Document {
   card_color: string
   card_number: string
   card_energy_cost: number

@@ -29,7 +29,7 @@ const cardSchema = new Schema<CardInterface>(
     is_banned: { type: Boolean, default: false },
     is_limited: { type: Boolean, default: false },
     has_errata: { type: Boolean, default: false },
-    limited_to: { type: Number },
+    limited_to: { type: Number }, // Cantidad de copias permitidas, investigar si es requerido
     errata_back: { type: String },
     errata_front: { type: String },
     digital_card_code: { type: String, required: true},
@@ -42,3 +42,4 @@ const cardSchema = new Schema<CardInterface>(
 )
 
 export const Card = model<CardInterface>('Card', cardSchema)
+export { cardSchema } 

@@ -34,3 +34,11 @@ export const getFilteredCards = async (filters: any): Promise<CardInterface[]> =
 export const deleteCard = async (id: string): Promise<CardInterface | null> => {
   return await Card.findByIdAndDelete(id)
 }
+
+export const incrementViewCount = async (cardNumber: string): Promise<CardInterface | null> => {
+  return await Card.findOneAndUpdate(
+    { card_number: cardNumber },
+    { $inc: { view_count: 1 } },
+    { new: true }
+  )
+}

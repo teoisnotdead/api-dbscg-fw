@@ -27,9 +27,5 @@ export const getCardByNumber = async (card_number: string): Promise<CardInterfac
 }
 
 export const incrementViewCount = async (cardNumber: string): Promise<CardInterface | null> => {
-  return await Card.findOneAndUpdate(
-    { card_number: cardNumber },
-    { $inc: { view_count: 1 } },
-    { new: true }
-  )
+  return await CardRepository.incrementViewCount(cardNumber)
 }

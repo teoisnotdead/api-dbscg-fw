@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
   res.send('<h1>DBSCG FW Server!!!</h1>')
 })
 app.use('/api/cards', cardRoutes)
+app.use('/api/decks', cardRoutes)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
