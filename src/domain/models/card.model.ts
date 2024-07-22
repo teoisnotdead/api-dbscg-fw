@@ -12,7 +12,7 @@ const skillSchema = new Schema(
 const cardSchema = new Schema<CardInterface>(
   {
     card_color: { type: String, required: true },
-    card_number: { type: String, required: true, unique: true },
+    card_number: { type: String, required: true },
     card_energy_cost: { type: Number },
     card_front_name: { type: String, required: true },
     card_front_power: { type: String, required: true },

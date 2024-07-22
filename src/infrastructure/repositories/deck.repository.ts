@@ -1,6 +1,8 @@
-import { Deck } from '../../domain/models/deck.model'
+import { CardInterface } from '../../domain/interfaces/card.interface'
 import { DeckInterface } from '../../domain/interfaces/deck.interface'
+import { Deck } from '../../domain/models/deck.model'
 import { generateToken, verifyToken } from '../../domain/services/jwt.service'
+import * as CardService from '../../domain/services/card.service'
 import { deckToPlainObject } from '../../utils/deck.util'
 
 export const createDeck = async (deckData: DeckInterface): Promise<DeckInterface> => {
@@ -77,14 +79,40 @@ export const exportDeck = async (deckId: string): Promise<string | null> => {
 export const importDeck = async (token: string, newDeckName: string, username: string): Promise<DeckInterface | null> => {
   const payload = verifyToken(token)
 
-  const importedDeckData: Omit<DeckInterface, 'createdAt' | 'updatedAt'> = {
-    ...payload,
+  const deckLeader = await CardService.getCardByNumber(payload.deck_leader.card_number)
+  if (!deckLeader) {
+    throw new Error(`Leader card with number ${payload.deck_leader.card_number} not found`)
+  }
+
+  const cards = await Promise.all(payload.cards.map(async (cardData: any) => {
+    const card = await CardService.getCardByNumber(cardData.card_number)
+    if (!card) {
+      throw new Error(`Card with number ${cardData.card_number} not found`)
+    }
+    return {
+      card: card as CardInterface,
+      quantity: cardData.quantity,
+    }
+  }))
+
+  const importedDeckData = {
     deck_name: newDeckName,
     view_count: 0,
+    deck_type: payload.deck_type,
+    deck_subtype: payload.deck_subtype,
+    deck_format: payload.deck_format,
+    deck_game_type: payload.deck_game_type,
+    deck_leader: {
+      ...deckLeader.toObject(),
+      card_number: payload.deck_leader.card_number,
+      image_front: payload.deck_leader.image_front,
+      image_back: payload.deck_leader.image_back,
+    } as CardInterface,
     user: {
       username,
       nametag: payload.user.nametag,
     },
+    cards,
   }
 
   const importedDeck = new Deck(importedDeckData)
