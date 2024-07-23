@@ -50,8 +50,11 @@ export const getDeckByIdController = async (req: Request, res: Response) => {
 export const getFilteredDecksController = async (req: Request, res: Response) => {
   try {
     const filters = req.query
-    const decks = await DeckService.getFilteredDecks(filters)
-    res.status(200).json(decks)
+    const page = parseInt(req.query.page as string) || 1
+    const limit = parseInt(req.query.limit as string) || 10
+
+    const result = await DeckService.getFilteredDecks(filters, page, limit)
+    res.status(200).json(result)
   } catch (error: any) {
     res.status(500).json({ message: error.message })
   }
@@ -90,44 +93,44 @@ export const incrementViewCountController = async (req: Request, res: Response) 
 
 export const cloneDeckController = async (req: Request, res: Response) => {
   try {
-    const { id, newDeckName, username } = req.body;
-    const clonedDeck = await DeckService.cloneDeck(id, newDeckName, username);
+    const { id, newDeckName, username } = req.body
+    const clonedDeck = await DeckService.cloneDeck(id, newDeckName, username)
     if (!clonedDeck) {
-      return res.status(404).json({ message: 'Deck not found' });
+      return res.status(404).json({ message: 'Deck not found' })
     }
     res.status(201).json({
       message: 'Deck cloned successfully',
       deck: clonedDeck,
-    });
+    })
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
 }
 
 export const exportDeckController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const token = await DeckService.exportDeck(id);
+    const { id } = req.params
+    const token = await DeckService.exportDeck(id)
     if (token) {
-      res.status(200).json({ token });
+      res.status(200).json({ token })
     } else {
-      res.status(404).json({ message: 'Deck not found' });
+      res.status(404).json({ message: 'Deck not found' })
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
 }
 
 export const importDeckController = async (req: Request, res: Response) => {
   try {
-    const { token, newDeckName, username } = req.body;
-    const deck = await DeckService.importDeck(token, newDeckName, username);
+    const { token, newDeckName, username } = req.body
+    const deck = await DeckService.importDeck(token, newDeckName, username)
     if (deck) {
-      res.status(201).json(deck);
+      res.status(201).json(deck)
     } else {
-      res.status(400).json({ message: 'Invalid token or deck data' });
+      res.status(400).json({ message: 'Invalid token or deck data' })
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
 }

@@ -14,7 +14,7 @@ export const getCardById = async (id: string): Promise<CardInterface | null> => 
   return await Card.findById(id)
 }
 
-export const getFilteredCards = async (filters: any, page: number, limit: number): Promise<{ cards: CardInterface[], total: number }> => {
+export const getFilteredCards = async (filters: any, page: number, limit: number): Promise<{ cards: CardInterface[], pagination: any }> => {
   const query: any = {}
 
   if (filters.card_color) query.card_color = filters.card_color
@@ -27,12 +27,20 @@ export const getFilteredCards = async (filters: any, page: number, limit: number
   if (filters.card_series) query.card_series = filters.card_series
   if (filters.card_front_skills) query['card_front_skills.type'] = { $in: filters.card_front_skills }
 
-  const total = await Card.countDocuments(query)
   const cards = await Card.find(query)
     .skip((page - 1) * limit)
     .limit(limit)
 
-  return { cards, total }
+  const total = await Card.countDocuments(query)
+
+  return {
+    cards,
+    pagination: {
+      total,
+      page,
+      limit,
+    },
+  }
 }
 
 export const deleteCard = async (id: string): Promise<CardInterface | null> => {

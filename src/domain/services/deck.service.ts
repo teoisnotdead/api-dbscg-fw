@@ -13,8 +13,8 @@ export const getDeckById = async (id: string): Promise<DeckInterface | null> => 
   return await DeckRepository.getDeckById(id)
 }
 
-export const getFilteredDecks = async (filters: any): Promise<DeckInterface[]> => {
-  return await DeckRepository.getFilteredDecks(filters)
+export const getFilteredDecks = async (filters: any, page: number, limit: number): Promise<{ decks: DeckInterface[], pagination: any }> => {
+  return await DeckRepository.getFilteredDecks(filters, page, limit)
 }
 
 export const deleteDeck = async (id: string): Promise<DeckInterface | null> => {
