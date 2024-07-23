@@ -6,7 +6,6 @@ export const createCardController = async (req: Request, res: Response) => {
   try {
     const cardData: CardInterface = req.body
 
-    // Verificar si una carta con el mismo card_number ya existe
     const existingCard = await CardService.getCardByNumber(cardData.card_number)
     if (existingCard) {
       return res.status(400).json({ message: 'Card with this card_number already exists' })
@@ -55,11 +54,11 @@ export const getCardByIdController = async (req: Request, res: Response) => {
 
 export const getFilteredCardsController = async (req: Request, res: Response) => {
   try {
-      const filters = req.query
-      const cards = await CardService.getFilteredCards(filters)
-      res.status(200).json(cards)
+    const { page = 1, limit = 10, ...filters } = req.query
+    const result = await CardService.getFilteredCards(filters, Number(page), Number(limit))
+    res.status(200).json(result)
   } catch (error: any) {
-      res.status(500).json({ message: error.message })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 }
 
@@ -93,7 +92,7 @@ export const getCardByNumberController = async (req: Request, res: Response) => 
 
 export const incrementViewCountController = async (req: Request, res: Response) => {
   try {
-    const cardNumber = req.params.cardNumber
+    const cardNumber = req.params.card_number
     const updatedCard = await CardService.incrementViewCount(cardNumber)
     if (updatedCard) {
       res.status(200).json({
@@ -104,6 +103,6 @@ export const incrementViewCountController = async (req: Request, res: Response) 
       res.status(404).json({ message: 'Card not found' })
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: 'Server error', error: error.message })
   }
 }

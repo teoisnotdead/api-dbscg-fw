@@ -14,8 +14,8 @@ export const getCardById = async (id: string): Promise<CardInterface | null> => 
   return await CardRepository.getCardById(id)
 }
 
-export const getFilteredCards = async (filters: any): Promise<CardInterface[]> => {
-  return await CardRepository.getFilteredCards(filters)
+export const getFilteredCards = async (filters: any, page: number = 1, limit: number = 10): Promise<{ cards: CardInterface[], total: number }> => {
+  return await CardRepository.getFilteredCards(filters, page, limit)
 }
 
 export const deleteCard = async (id: string): Promise<CardInterface | null> => {
