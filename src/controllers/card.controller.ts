@@ -7,10 +7,10 @@ export const createCardController = async (req: Request, res: Response) => {
     const cardData: CardInterface = req.body
 
     const existingCard = await CardService.getCardByNumber(cardData.card_number)
-    if (existingCard) {
-      return res.status(400).json({ message: 'Card with this card_number already exists' })
-    }
-    const newCard = await CardService.createCard(cardData)
+    
+    if (existingCard) return res.status(400).json({ message: 'Card with this card_number already exists' })
+    
+      const newCard = await CardService.createCard(cardData)
     res.status(201).json({
       message: 'Card created successfully',
       card: newCard,

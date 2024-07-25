@@ -4,7 +4,14 @@ import { AuthRequest } from '../domain/interfaces/auth.interface'
 
 export const registerController = async (req: Request, res: Response) => {
   try {
-    const user = await UserService.registerUser(req.body)
+    const userData = req.body
+
+    const existingUser = await UserService.getUserByUsername(userData.username)
+    const existingEmail = await UserService.getUserByEmail(userData.email)
+    
+    if (existingUser || existingEmail) return res.status(400).json({ message: 'User with this username or email already exists' })
+    
+    const user = await UserService.registerUser(userData)
 
     const token = UserService.generateToken(user)
     res.status(201).json({
