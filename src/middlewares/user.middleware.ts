@@ -20,3 +20,11 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
     return res.status(401).json({ message: 'Invalid token' })
   }
 }
+
+export const adminMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'admin') {
+    next()
+  } else {
+    return res.status(403).json({ message: 'Forbidden' })
+  }
+}
