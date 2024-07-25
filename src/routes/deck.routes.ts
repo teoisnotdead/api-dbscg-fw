@@ -10,7 +10,7 @@ import {
   exportDeckController,
   importDeckController
 } from '../controllers/deck.controller'
-import { validateDeck, validateDeckUpdate } from '../middlewares/validateDeck'
+import { validateDeck, validateDeckUpdate } from '../middlewares/deck.middleware'
 const router = Router()
 
 router.post('/', validateDeck, createDeckController)

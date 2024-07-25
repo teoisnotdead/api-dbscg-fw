@@ -8,7 +8,7 @@ import {
   getCardByNumberController,
   incrementViewCountController,
 } from '../controllers/card.controller'
-import { validateCard, validateCardUpdate } from '../middlewares/validateCard'
+import { validateCard, validateCardUpdate } from '../middlewares/card.middleware'
 
 const router = Router()
 

@@ -35,13 +35,14 @@ This is the backend service for the Dragon Ball Super Card Game Fusion World app
 
 ## Running the Application
 
-Start the server:
+For production
 
 ```
+npm run build
 npm start
 ```
 
-For development with nodemon:
+For development
 
 ```
 npm run dev
@@ -62,7 +63,9 @@ src/
 |-- infrastructure/
 | |-- database/
 | |-- repositories/
+|-- middlewares/
 |-- routes/
+|-- utils/
 |-- app.js
 |-- config.js
 |-- index.js
