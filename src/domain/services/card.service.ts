@@ -14,7 +14,7 @@ export const getCardById = async (id: string): Promise<CardInterface | null> => 
   return await CardRepository.getCardById(id)
 }
 
-export const getFilteredCards = async (filters: any, page: number = 1, limit: number = 10): Promise<{ cards: CardInterface[], total: number }> => {
+export const getFilteredCards = async (filters: any, page: number = 1, limit: number = 10): Promise<{ cards: CardInterface[], pagination: any }> => {
   return await CardRepository.getFilteredCards(filters, page, limit)
 }
 
