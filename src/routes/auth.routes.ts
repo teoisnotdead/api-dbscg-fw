@@ -3,11 +3,11 @@ import {
   registerController,
   loginController,
 } from '../controllers/auth.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
+import { validateUser } from '../middlewares/user.middleware'
 
 const router = Router()
 
-router.post('/register', registerController)
+router.post('/register', validateUser, registerController)
 router.post('/login', loginController)
 
 export { router as authRoutes }
