@@ -10,6 +10,6 @@ export const findUserByUsername = async (username: string): Promise<UserInterfac
   return await User.findOne({ username })
 }
 
-export const findUserById = async (id: string): Promise<UserInterface | null> => {
-  return await User.findById(id)
+export const findUserByEmail = async (email: string): Promise<UserInterface | null> => {
+  return await User.findOne({ email })
 }

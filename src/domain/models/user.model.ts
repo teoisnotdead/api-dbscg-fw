@@ -7,6 +7,8 @@ const UserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   nametag: { type: String },
+  decks: [{ type: Schema.Types.ObjectId, ref: 'Deck' }],
+  favoriteCards: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
   role: { type: String, enum: ['basic', 'admin'], default: 'basic' },
   subscription: { type: String, enum: ['free', 'premium'], default: 'free' },
 }, {

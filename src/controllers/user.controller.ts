@@ -5,6 +5,7 @@ import { AuthRequest } from '../domain/interfaces/auth.interface'
 export const registerController = async (req: Request, res: Response) => {
   try {
     const user = await UserService.registerUser(req.body)
+
     const token = UserService.generateToken(user)
     res.status(201).json({
       message: 'User registered successfully',
@@ -14,6 +15,9 @@ export const registerController = async (req: Request, res: Response) => {
         username: user.username,
         email: user.email,
         role: user.role,
+        nametag: user.nametag,
+        decks: user.decks,
+        favoriteCards: user.favoriteCards,
         subscription: user.subscription,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -40,7 +44,7 @@ export const loginController = async (req: Request, res: Response) => {
 
 export const getUserController = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await UserService.getUserById(req.user!.id)
+    const user = await UserService.getUserByUsername(req.user!.username)
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
     }

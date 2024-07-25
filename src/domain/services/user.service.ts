@@ -24,13 +24,17 @@ export const loginUser = async (username: string, password: string): Promise<{ t
   return { token, user }
 }
 
-export const getUserById = async (id: string): Promise<UserInterface | null> => {
-  return await UserRepository.findUserById(id)
+export const getUserByUsername = async (username: string): Promise<UserInterface | null> => {
+  return await UserRepository.findUserByUsername(username)
+}
+
+export const getUserByEmail = async (email: string): Promise<UserInterface | null> => {
+  return await UserRepository.findUserByEmail(email)
 }
 
 export const generateToken = (user: UserInterface): string => {
   return jwt.sign(
-    { id: user._id, role: user.role, subscription: user.subscription },
+    { id: user._id, username: user.username, subscription: user.subscription },
     JWT_SECRET,
     { expiresIn: '1h' }
   )

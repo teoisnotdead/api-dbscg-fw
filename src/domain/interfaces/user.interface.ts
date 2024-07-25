@@ -6,6 +6,8 @@ export interface UserInterface extends Document {
   email: string
   password: string
   nametag?: string
+  decks?: string[]
+  favoriteCards?: string[]
   role: 'basic' | 'admin'
   subscription: 'free' | 'premium'
   createdAt?: Date
