@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { config } from '../../config'
 
-const JWT_SECRET = config.JWT_SECRET as string;
+const JWT_SECRET = config.JWT_SECRET as string
 
 export const registerUser = async (userData: Partial<UserInterface>): Promise<UserInterface> => {
   const hashedPassword = await bcrypt.hash(userData.password!, 10)
@@ -28,14 +28,27 @@ export const getUserByUsername = async (username: string): Promise<UserInterface
   return await UserRepository.findUserByUsername(username)
 }
 
-export const getUserByEmail = async (email: string): Promise<UserInterface | null> => {
-  return await UserRepository.findUserByEmail(email)
-}
-
 export const generateToken = (user: UserInterface): string => {
   return jwt.sign(
     { id: user._id, username: user.username, subscription: user.subscription },
     JWT_SECRET,
     { expiresIn: '1h' }
   )
+}
+
+export const deleteUser = async (id: string): Promise<UserInterface | null> => {
+  return await UserRepository.deleteUser(id)
+}
+
+export const updateUser = async (id: string, userData: Partial<UserInterface>): Promise<UserInterface | null> => {
+  return await UserRepository.updateUser(id, userData)
+}
+
+export const getUsers = async (filters: any): Promise<UserInterface[]> => {
+  return await UserRepository.findUsers(filters);
+}
+
+export const getUserByFilters = async (filters: Partial<UserInterface>): Promise<UserInterface | null> => {
+  const users = await UserRepository.findUsers(filters)
+  return users.length > 0 ? users[0] : null
 }
