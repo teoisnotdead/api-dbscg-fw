@@ -1,7 +1,5 @@
 import { Router } from 'express'
 import {
-  registerController,
-  loginController,
   getUserController,
   getUsersController,
   updateUserController,
@@ -11,11 +9,9 @@ import { authMiddleware } from '../middlewares/auth.middleware'
 
 const router = Router()
 
-router.post('/register', registerController)
-router.post('/login', loginController)
-router.get('/user', authMiddleware, getUserController)
-router.get('/users', authMiddleware, getUsersController)
-router.put('/user/:id', authMiddleware, updateUserController)
-router.delete('/user/:id', authMiddleware, deleteUserController)
+router.get('/:id', authMiddleware, getUserController)
+router.get('/', authMiddleware, getUsersController)
+router.put('/:id', authMiddleware, updateUserController)
+router.delete('/:id', authMiddleware, deleteUserController)
 
 export { router as userRoutes }
