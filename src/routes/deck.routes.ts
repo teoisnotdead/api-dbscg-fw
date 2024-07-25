@@ -20,6 +20,7 @@ router.get('/', getFilteredDecksController)
 router.delete('/:id', deleteDeckController)
 router.put('/increment-view/:id', incrementViewCountController)
 router.post('/clone', cloneDeckController)
-router.get('/export/:id', exportDeckController);
-router.post('/import', importDeckController);
+router.get('/export/:id', exportDeckController)
+router.post('/import', importDeckController)
+
 export { router as deckRoutes }

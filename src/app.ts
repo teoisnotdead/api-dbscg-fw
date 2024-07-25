@@ -1,11 +1,14 @@
 import express from 'express'
+import './domain/interfaces/auth.interface'
 import './infrastructure/database/mongoose'
 import { cardRoutes } from './routes/card.routes'
 import { deckRoutes } from './routes/deck.routes'
+import { userRoutes } from './routes/user.routes'
+import { config } from './config'
+
 
 const app = express()
-const port = process.env.PORT || 3000
-const jwtSecret = process.env.JWT_SECRET
+const port = config.PORT
 
 app.use(express.json())
 app.get('/', (req, res) => {
@@ -13,6 +16,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/cards', cardRoutes)
 app.use('/api/decks', deckRoutes)
+app.use('/api/auth', userRoutes)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)

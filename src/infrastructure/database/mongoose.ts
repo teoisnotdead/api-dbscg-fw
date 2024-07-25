@@ -1,10 +1,7 @@
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
+import { config } from '../../config'
 
-dotenv.config()
-
-const mongoUri: string = process.env.MONGO_URI as string
-
+const mongoUri = config.DB_URI
 
 if (mongoUri) {
   mongoose

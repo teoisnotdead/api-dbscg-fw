@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES6",
     "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "typeRoots": ["./node_modules/@types", "./src/interfaces"],
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "./types.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
