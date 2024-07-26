@@ -5,13 +5,19 @@ import {
   updateUserController,
   deleteUserController,
 } from '../controllers/user.controller'
-import { authMiddleware } from '../middlewares/auth.middleware'
-import { validateUserUpdate } from '../middlewares/user.middleware'
+import {
+  authMiddleware,
+  adminMiddleware,
+  validateUserUpdate
+} from '../middlewares'
 
 const router = Router()
 
-router.get('/:id', authMiddleware, getUserController)
-router.get('/', authMiddleware, getUsersController)
+// Protected routes
+router.get('/:id', authMiddleware, adminMiddleware, getUserController)
+router.get('/', authMiddleware, adminMiddleware, getUsersController)
+
+// Public routes
 router.put('/:id', authMiddleware, validateUserUpdate, updateUserController)
 router.delete('/:id', authMiddleware, deleteUserController)
 

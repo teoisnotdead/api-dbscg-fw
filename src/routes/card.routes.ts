@@ -8,16 +8,24 @@ import {
   getCardByNumberController,
   incrementViewCountController,
 } from '../controllers/card.controller'
-import { validateCard, validateCardUpdate } from '../middlewares/card.middleware'
+import {
+  authMiddleware,
+  adminMiddleware,
+  validateCard,
+  validateCardUpdate
+} from '../middlewares'
 
 const router = Router()
 
-router.post('/', validateCard, createCardController)
-router.put('/:id', validateCardUpdate, updateCardController)
-router.get('/:id', getCardByIdController)
-router.get('/', getFilteredCardsController)
-router.delete('/:id', deleteCardController)
-router.get('/card-number/:card_number', getCardByNumberController)
-router.put('/increment-view/:card_number', incrementViewCountController)
+// Protected routes
+router.post('/', authMiddleware, adminMiddleware, validateCard, createCardController)
+router.put('/:id', authMiddleware, adminMiddleware, validateCardUpdate, updateCardController)
+router.get('/:id', authMiddleware, adminMiddleware, getCardByIdController)
+router.delete('/:id', authMiddleware, adminMiddleware, deleteCardController)
+
+// Public routes
+router.get('/', authMiddleware, getFilteredCardsController)
+router.get('/card-number/:card_number', authMiddleware, getCardByNumberController)
+router.put('/increment-view/:card_number', authMiddleware, incrementViewCountController)
 
 export { router as cardRoutes }

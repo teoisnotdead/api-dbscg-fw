@@ -8,19 +8,28 @@ import {
   incrementViewCountController,
   cloneDeckController,
   exportDeckController,
-  importDeckController
+  importDeckController,
 } from '../controllers/deck.controller'
-import { validateDeck, validateDeckUpdate } from '../middlewares/deck.middleware'
+import {
+  authMiddleware,
+  adminMiddleware,
+  validateDeck,
+  validateDeckUpdate,
+} from '../middlewares'
+
 const router = Router()
 
-router.post('/', validateDeck, createDeckController)
-router.put('/:id', validateDeckUpdate, updateDeckController)
-router.get('/:id', getDeckByIdController)
-router.get('/', getFilteredDecksController)
-router.delete('/:id', deleteDeckController)
-router.put('/increment-view/:id', incrementViewCountController)
-router.post('/clone', cloneDeckController)
-router.get('/export/:id', exportDeckController)
-router.post('/import', importDeckController)
+// Protected routes
+router.get('/:id', authMiddleware, adminMiddleware, getDeckByIdController)
+
+// Public routes
+router.post('/', authMiddleware, validateDeck, createDeckController)
+router.put('/:id', authMiddleware, validateDeckUpdate, updateDeckController)
+router.get('/', authMiddleware, getFilteredDecksController)
+router.delete('/:id', authMiddleware, deleteDeckController)
+router.put('/increment-view/:id', authMiddleware, incrementViewCountController)
+router.post('/clone', authMiddleware, cloneDeckController)
+router.get('/export/:id', authMiddleware, exportDeckController)
+router.post('/import', authMiddleware, importDeckController)
 
 export { router as deckRoutes }
