@@ -1,7 +1,12 @@
 import express from 'express'
 import './domain/interfaces/auth.interface'
 import './infrastructure/database/mongoose'
-import { cardRoutes, deckRoutes, userRoutes, authRoutes } from './routes'
+import { cardRoutes,
+  deckRoutes,
+  userRoutes,
+  authRoutes,
+  adminRoutes
+} from './routes'
 import { config } from './config'
 
 
@@ -16,6 +21,7 @@ app.use('/api/cards', cardRoutes)
 app.use('/api/decks', deckRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)

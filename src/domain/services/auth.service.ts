@@ -26,7 +26,7 @@ export const loginUser = async (username: string, password: string): Promise<{ t
 
 export const generateToken = (user: UserInterface): string => {
   return jwt.sign(
-    { id: user._id, username: user.username, subscription: user.subscription },
+    { id: user._id, username: user.username, role: user.role, subscription: user.subscription },
     JWT_SECRET,
     { expiresIn: '1h' }
   )

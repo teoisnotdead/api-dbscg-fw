@@ -21,3 +21,7 @@ export const getUserByFilters = async (filters: Partial<UserInterface>): Promise
   const users = await UserRepository.findUsers(filters)
   return users.length > 0 ? users[0] : null
 }
+
+export const updateUserRole = async (id: string, role: 'basic' | 'admin'): Promise<UserInterface | null> => {
+  return await UserRepository.updateUser(id, { role })
+}
