@@ -22,7 +22,6 @@ export interface CardInterface extends Document {
   errata_back?: string
   errata_front?: string
   digital_card_code?: string
-  variant_of?: number
   image_front: string
   image_back: string
   view_count: number
@@ -31,6 +30,6 @@ export interface CardInterface extends Document {
 }
 
 interface Skill {
-  type: string
+  type: string[]
   description: string
 }

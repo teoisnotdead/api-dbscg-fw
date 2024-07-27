@@ -3,7 +3,7 @@ import { CardInterface } from '../interfaces/card.interface'
 
 const skillSchema = new Schema(
   {
-    type: { type: String, required: true },
+    type: { type: [String], required: true },
     description: { type: String, required: true },
   },
   { _id: false }
@@ -33,7 +33,6 @@ const cardSchema = new Schema<CardInterface>(
     errata_back: { type: String },
     errata_front: { type: String },
     digital_card_code: { type: String, required: true},
-    variant_of: { type: Number },
     image_front: { type: String, required: true },
     image_back: { type: String },
     view_count: { type: Number, default: 0 },
