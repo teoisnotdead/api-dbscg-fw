@@ -9,7 +9,7 @@ export interface CardInterface extends Document {
   card_back_name?: string
   card_back_power?: string
   card_back_trait?: string
-  card_front_skills: Skill[]
+  card_front_skills?: Skill[]
   card_back_skills?: Skill[]
   card_rarity: string
   card_type: string
@@ -22,6 +22,7 @@ export interface CardInterface extends Document {
   errata_back?: string
   errata_front?: string
   digital_card_code?: string
+  variant_of?: number
   image_front: string
   image_back: string
   view_count: number
@@ -30,6 +31,6 @@ export interface CardInterface extends Document {
 }
 
 interface Skill {
-  type: string[]
-  description: string
+  type?: string
+  description?: string
 }

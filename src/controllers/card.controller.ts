@@ -20,6 +20,16 @@ export const createCardController = async (req: Request, res: Response) => {
   }
 }
 
+export const insertManyCardsController = async (req: Request, res: Response) => {
+  try {
+    const cards: CardInterface[] = req.body;
+    const insertedCards = await CardService.insertManyCards(cards);
+    res.status(201).json({ message: 'Cards inserted successfully', cards: insertedCards });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export const updateCardController = async (req: Request, res: Response) => {
   try {
     const id = req.params.id

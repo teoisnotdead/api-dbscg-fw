@@ -6,6 +6,10 @@ export const createCard = async (cardData: CardInterface): Promise<CardInterface
   return await card.save()
 }
 
+export const insertManyCards = async (cards: CardInterface[]): Promise<CardInterface[]> => {
+  return await Card.insertMany(cards)
+}
+
 export const updateCard = async (id: string, cardData: CardInterface): Promise<CardInterface | null> => {
   return await Card.findByIdAndUpdate(id, cardData, { new: true })
 }

@@ -7,6 +7,7 @@ import {
   getFilteredCardsController,
   getCardByNumberController,
   incrementViewCountController,
+  insertManyCardsController,
 } from '../controllers/card.controller'
 import {
   authMiddleware,
@@ -19,6 +20,7 @@ const router = Router()
 
 // Protected routes
 router.post('/', authMiddleware, adminMiddleware, validateCard, createCardController)
+router.post('/builk-cards', authMiddleware, adminMiddleware, insertManyCardsController)
 router.put('/:id', authMiddleware, adminMiddleware, validateCardUpdate, updateCardController)
 router.get('/:id', authMiddleware, adminMiddleware, getCardByIdController)
 router.delete('/:id', authMiddleware, adminMiddleware, deleteCardController)
